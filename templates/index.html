@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produtos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f5f7;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 { color: #222; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th { background: #f0f2f5; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Cadastro de Produtos</h1>
+        <p>Produtos cadastrados no banco de dados:</p>
+
+<h2>Pesquisar produtos</h2>
+
+<form action="/" method="GET">
+    <input
+        type="text"
+        name="pesquisa"
+        placeholder="Digite o nome do produto"
+        value="{{ pesquisa }}"
+    >
+    <button type="submit">Pesquisar</button>
+    <a href="/">Limpar pesquisa</a>
+</form>
+
+<hr>
+
+
+<h2>Cadastrar produto</h2>
+
+<form action="/cadastrar" method="POST">
+    <p>
+        <label>Nome:</label><br>
+        <input type="text" name="nome" required>
+    </p>
+
+    <p>
+        <label>Preço (R$):</label><br>
+        <input type="number" name="preco"
+               step="0.01" min="0" required>
+    </p>
+
+    <p>
+        <label>Quantidade:</label><br>
+        <input type="number" name="quantidade"
+               min="0" step="1" required>
+    </p>
+
+    <p>
+        <label>Categoria:</label><br>
+        <input type="text" name="categoria" required>
+    </p>
+
+    <button type="submit">Cadastrar produto</button>
+</form>
+
+<hr>
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Categoria</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in produtos %}
+                <tr>
+                    <td>{{ produto.id }}</td>
+                    <td>{{ produto.nome }}</td>
+                    <td>R$ {{ "%.2f"|format(produto.preco) }}</td>
+                    <td>{{ produto.quantidade }}</td>
+                    <td>{{ produto.categoria }}</td>
+
+<td>
+    <a href="{{ url_for('editar', id=produto.id) }}">
+        Editar
+    </a>
+
+    <form action="{{ url_for('excluir', id=produto.id) }}"
+          method="POST"
+          style="display:inline;"
+          onsubmit="return confirm('Deseja excluir este produto?');">
+        <button type="submit">Excluir</button>
+    </form>
+</td>
+
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">Nenhum produto cadastrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

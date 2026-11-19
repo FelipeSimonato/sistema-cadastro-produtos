@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Produto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f5f7;
+            padding: 40px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 16px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 12px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Produto</h1>
+
+        <form method="POST">
+            <label>Nome:</label>
+            <input type="text" name="nome"
+                   value="{{ produto.nome }}" required>
+
+            <label>Preço:</label>
+            <input type="number" name="preco"
+                   step="0.01" min="0"
+                   value="{{ produto.preco }}" required>
+
+            <label>Quantidade:</label>
+            <input type="number" name="quantidade"
+                   min="0" step="1"
+                   value="{{ produto.quantidade }}" required>
+
+            <label>Categoria:</label>
+            <input type="text" name="categoria"
+                   value="{{ produto.categoria }}" required>
+
+            <button type="submit">Salvar alterações</button>
+        </form>
+
+        <p><a href="/">Voltar</a></p>
+    </div>
+</body>
+</html>
